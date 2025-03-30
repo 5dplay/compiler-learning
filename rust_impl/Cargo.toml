@@ -1,3 +1,3 @@
 [workspace]
 resolver = "2"
-members = ["print_blocks", "compiler_tools"]
+members = ["print_blocks", "compiler_tools", "tdce"]

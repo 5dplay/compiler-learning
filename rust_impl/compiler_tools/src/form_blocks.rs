@@ -57,8 +57,22 @@ pub fn form_blocks(instrs: &Value) -> Vec<Vec<Value>> {
     blocks
 }
 
-pub fn parse_once(function: &Value) {
-    form_blocks(&function["instrs"]);
+pub fn new_functions(json: &str) -> Vec<Vec<Value>> {
+    let bril_json: Value = serde_json::from_str(json).unwrap();
+    let mut functions: Vec<Vec<Value>> = Vec::new();
+
+    for function in bril_json["functions"].as_array().unwrap() {
+        let mut v: Vec<Value> = Vec::new();
+        let instrs = &function["instrs"];
+
+        for instr in instrs.as_array().unwrap() {
+            v.push(instr.clone());
+        }
+
+        functions.push(v);
+    }
+
+    functions
 }
 
 pub fn blocks_print(json: &str) {
