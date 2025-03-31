@@ -75,6 +75,21 @@ pub fn new_functions(json: &str) -> Vec<Vec<Value>> {
     functions
 }
 
+pub fn function_print(func: &Value) {
+    let instrs = &func["instrs"];
+    let mut j = 0;
+    let blocks = form_blocks(instrs);
+    for block in &blocks {
+        println!("block {}", j);
+        
+        for instr in block {
+            println!("\t{}", instr);
+        }
+
+        j += 1;
+    }
+}
+
 pub fn blocks_print(json: &str) {
     let mut i = 0;
     let bril_json: Value = serde_json::from_str(json).unwrap();
@@ -82,18 +97,7 @@ pub fn blocks_print(json: &str) {
     for function in bril_json["functions"].as_array().unwrap() {
         println!("function {}:", i);
 
-        let instrs = &function["instrs"];
-        let mut j = 0;
-        let blocks = form_blocks(instrs);
-        for block in &blocks {
-            println!("block {}", j);
-            
-            for instr in block {
-                println!("\t{}", instr);
-            }
-
-            j += 1;
-        }
+        function_print(function);
 
         i += 1;
     }
